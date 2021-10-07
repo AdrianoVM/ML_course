@@ -2,7 +2,7 @@
 """ Grid Search"""
 
 import numpy as np
-import costs
+from labs.ex02.template import costs
 
 
 def generate_w(num_intervals):
