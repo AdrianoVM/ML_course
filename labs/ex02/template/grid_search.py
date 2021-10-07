@@ -20,6 +20,14 @@ def get_best_parameters(w0, w1, losses):
 
 # ***************************************************
 # INSERT YOUR CODE HERE
-# TODO: Paste your implementation of grid_search
-#       here when it is done.
+def grid_search(y, tx, w0, w1):
+    """Algorithm for grid search."""
+    losses = np.zeros((len(w0), len(w1)))
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # ***************************************************
+    for i in range(w0.shape[0]):
+        for j in range(w1.shape[0]):
+            losses[i, j] = costs.compute_loss(y, tx, np.array((w0[i], w1[j])))
+    return losses
 # ***************************************************

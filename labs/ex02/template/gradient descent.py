@@ -1,16 +1,24 @@
 # -*- coding: utf-8 -*-
 """Gradient Descent"""
+import numpy as np
+from costs import compute_loss
 
-def compute_gradient(y, tx, w):
+
+def compute_gradient(y, tx, w, sub=False):
     """Compute the gradient."""
     # ***************************************************
     # INSERT YOUR CODE HERE
-    # TODO: compute gradient and loss
+    e = y - tx @ np.asarray(w)
+    N = tx.shape[0]
+    if sub:
+        gradient = np.mean(np.array([-np.sign(e), -(np.sign(e)) * tx[:, 1]]), axis=1)
+    else:
+        gradient = - 1 / N * tx.T @ e
+    return gradient
     # ***************************************************
-    raise NotImplementedError
 
 
-def gradient_descent(y, tx, initial_w, max_iters, gamma):
+def gradient_descent(y, tx, initial_w, max_iters, gamma, mae=False):
     """Gradient descent algorithm."""
     # Define parameters to store w and loss
     ws = [initial_w]
@@ -19,18 +27,17 @@ def gradient_descent(y, tx, initial_w, max_iters, gamma):
     for n_iter in range(max_iters):
         # ***************************************************
         # INSERT YOUR CODE HERE
-        # TODO: compute gradient and loss
+        loss = compute_loss(y, tx, w, mae)
+        gradient = compute_gradient(y, tx, w, mae)
         # ***************************************************
-        raise NotImplementedError
         # ***************************************************
         # INSERT YOUR CODE HERE
-        # TODO: update w by gradient
+        w = w - gamma * gradient
         # ***************************************************
-        raise NotImplementedError
         # store w and loss
         ws.append(w)
         losses.append(loss)
         print("Gradient Descent({bi}/{ti}): loss={l}, w0={w0}, w1={w1}".format(
-              bi=n_iter, ti=max_iters - 1, l=loss, w0=w[0], w1=w[1]))
+            bi=n_iter, ti=max_iters - 1, l=loss, w0=w[0], w1=w[1]))
 
     return losses, ws
